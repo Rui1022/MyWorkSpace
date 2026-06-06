@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cat Memos</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: #fff8f0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 4rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      color: #3d2b1f;
+      letter-spacing: 0.02em;
+    }
+
+    header p {
+      color: #9b7b6a;
+      margin-top: 0.4rem;
+      font-size: 1rem;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.4rem;
+      width: 100%;
+      max-width: 860px;
+    }
+
+    .memo {
+      background: #fffde7;
+      border-radius: 14px;
+      padding: 1.4rem 1.2rem 1.2rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      position: relative;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .memo:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+    }
+
+    .memo.pink  { background: #fff0f5; }
+    .memo.mint  { background: #f0fff8; }
+    .memo.lavender { background: #f5f0ff; }
+    .memo.peach { background: #fff4ec; }
+
+    .memo .cat {
+      font-size: 2rem;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    .memo .text {
+      font-size: 0.95rem;
+      color: #4a3728;
+      line-height: 1.55;
+    }
+
+    .memo .tag {
+      display: inline-block;
+      margin-top: 0.9rem;
+      font-size: 0.72rem;
+      background: rgba(0,0,0,0.06);
+      color: #7a5c50;
+      border-radius: 20px;
+      padding: 0.2rem 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .pin {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 14px;
+      height: 14px;
+      background: #f4756b;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(244,117,107,0.5);
+    }
+
+    footer {
+      margin-top: 3rem;
+      font-size: 0.8rem;
+      color: #c0a898;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🐾 Cat Memos</h1>
+    <p>little notes from your feline overlords</p>
+  </header>
+
+  <div class="board">
+
+    <div class="memo pink">
+      <div class="pin"></div>
+      <span class="cat">😸</span>
+      <p class="text">The sun spot has moved. I must follow it immediately. All meetings are cancelled.</p>
+      <span class="tag">urgent</span>
+    </div>
+
+    <div class="memo mint">
+      <div class="pin"></div>
+      <span class="cat">🐱</span>
+      <p class="text">I knocked your water glass over. It was an experiment. Results: wet.</p>
+      <span class="tag">research</span>
+    </div>
+
+    <div class="memo lavender">
+      <div class="pin"></div>
+      <span class="cat">😺</span>
+      <p class="text">Reminder: 3 AM is the optimal time for zoomies and loud meowing. Do not question this.</p>
+      <span class="tag">schedule</span>
+    </div>
+
+    <div class="memo peach">
+      <div class="pin"></div>
+      <span class="cat">🙀</span>
+      <p class="text">There is a cucumber in the kitchen. I will not be handling this myself. You're welcome.</p>
+      <span class="tag">incident</span>
+    </div>
+
+    <div class="memo mint">
+      <div class="pin"></div>
+      <span class="cat">😻</span>
+      <p class="text">Your laptop is warm and I am cold. This is not a request.</p>
+      <span class="tag">takeover</span>
+    </div>
+
+    <div class="memo pink">
+      <div class="pin"></div>
+      <span class="cat">🐾</span>
+      <p class="text">I have reviewed the box you brought home. The box is mine now. Contents: negotiable.</p>
+      <span class="tag">acquisition</span>
+    </div>
+
+    <div class="memo">
+      <div class="pin"></div>
+      <span class="cat">😴</span>
+      <p class="text">Nap #7 of the day is in progress. Please hold all head scratches until I wake up.</p>
+      <span class="tag">do not disturb</span>
+    </div>
+
+    <div class="memo lavender">
+      <div class="pin"></div>
+      <span class="cat">😼</span>
+      <p class="text">I pushed your keys off the counter. You're welcome. They looked too comfortable up there.</p>
+      <span class="tag">maintenance</span>
+    </div>
+
+  </div>
+
+  <footer>made with 🐱 love</footer>
+
+</body>
+</html>
