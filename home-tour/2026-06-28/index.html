@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Tour Dashboard | May 10</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-primary: #38bdf8;
+            --accent-secondary: #818cf8;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --success: #22c55e;
+            --warning: #eab308;
+            --danger: #ef4444;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            padding-bottom: 50px;
+            background-image: radial-gradient(circle at top right, #1e293b, #0f172a);
+            background-attachment: fixed;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to bottom, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            margin: 40px 0 20px;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline-section {
+            margin-bottom: 40px;
+            padding: 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .timeline-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .time {
+            width: 90px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .property-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .property-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            scroll-margin-top: 20px;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .property-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .property-address {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .property-specs {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .property-subspecs {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 16px;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .badge-green { background: rgba(34, 197, 94, 0.1); color: #4ade80; border-color: rgba(34, 197, 94, 0.2); }
+        .badge-yellow { background: rgba(234, 179, 8, 0.1); color: #facc15; border-color: rgba(234, 179, 8, 0.2); }
+        .badge-red { background: rgba(239, 68, 68, 0.1); color: #f87171; border-color: rgba(239, 68, 68, 0.2); }
+        .badge-blue { background: rgba(56, 189, 248, 0.1); color: #38bdf8; border-color: rgba(56, 189, 248, 0.2); }
+
+        .quick-visual {
+            margin-bottom: 16px;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent-secondary);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+        }
+
+        .analysis-point {
+            margin-bottom: 12px;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .analysis-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--accent-primary);
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .analysis-content {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .card-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary { background: var(--accent-primary); color: #000; }
+        .btn-secondary { background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid var(--glass-border); }
+
+        details { margin-top: 15px; }
+        details summary {
+            list-style: none;
+            cursor: pointer;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            transition: all 0.2s;
+        }
+        details summary:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+        details summary::-webkit-details-marker { display: none; }
+        details[open] summary {
+            margin-bottom: 15px;
+            border-style: solid;
+            color: #fff;
+            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--accent-primary);
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8rem; }
+            .property-address { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-badge">Jun 28 • Private Agent Tour (5 Homes)</div>
+            <h1>Open House Dashboard</h1>
+            <p style="color:var(--text-dim); margin-top: 10px;">Private agent tour starting 9AM. Both Pomeroy Ave homes → Valley Square (West SJ) → Campbell. 5 stops, done by ~10:45AM.</p>
+        </header>
+
+        <div class="timeline-section">
+            <h2 style="font-size:1.1rem; margin-bottom:15px; color:var(--text-main)">📅 Today's Itinerary</h2>
+<div style="font-size: 0.8rem; color: var(--accent-secondary); margin-top: 15px; margin-bottom: 10px;">CLUSTER 1: SANTA CLARA (POMEROY)</div>
+<a href="#card-899498" class="timeline-item"><div class="time">09:00 AM</div><div>771 Pomeroy Ave</div></a>
+<a href="#card-1175186" class="timeline-item"><div class="time">09:15 AM</div><div>1718 Pomeroy Ave</div></a>
+<div style="font-size: 0.8rem; color: var(--accent-secondary); margin-top: 15px; margin-bottom: 10px;">CLUSTER 2: WEST SAN JOSE</div>
+<a href="#card-1263206" class="timeline-item"><div class="time">09:45 AM</div><div>3385 Valley Square Ln</div></a>
+<a href="#card-1673333" class="timeline-item"><div class="time">10:00 AM</div><div>3362 Valley Square Ln</div></a>
+<div style="font-size: 0.8rem; color: var(--accent-secondary); margin-top: 15px; margin-bottom: 10px;">CLUSTER 3: CAMPBELL</div>
+<a href="#card-1687536" class="timeline-item"><div class="time">10:30 AM</div><div>1375 Colleen Way</div></a>
+
+        </div>
+
+        <div class="section-title">📍 The Route</div>
+        <div class="property-grid">
+
+            <!-- Card 899498 -->
+            <div class="property-card" id="card-899498">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">771 Pomeroy Ave, Santa Clara, CA 95051</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,850,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">4 Bed • 2 Bath • 1,498 SqFt</div>
+                <div class="property-subspecs">6,600 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-green">Strong Buy</div> <div class="badge badge-blue">Santa Clara</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Priority Tour! Passes all Must-Haves and offers great value.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 95051. Schools: Sutter Elementary School (7/10), Buchser Middle School (8/10), Santa Clara High School (8/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,850,000. $0 HOA (SFH). Estimated Prop 13 property tax: ~$22,200/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1961. Equipped with Central AC. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 4 bd / 2 ba with 1,498 sq ft. Lot size is 6,600 sq ft. Meets nice-to-have yard requirement (> 6,000 sq ft).</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">✅ Single-Family Home<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>✅ Big Yard (> 6k)<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Santa-Clara/771-Pomeroy-Ave-95051/home/899498" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=771+Pomeroy+Ave,+Santa+Clara,+CA+95051" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 1175186 -->
+            <div class="property-card" id="card-1175186">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">1718 Pomeroy Ave, Santa Clara, CA 95051</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,799,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">3 Bed • 2 Bath • 1,080 SqFt</div>
+                <div class="property-subspecs">6,630 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Santa Clara</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 95051. Schools: Briarwood Elementary School (6/10), Juan Cabrillo Middle School (7/10), Adrian Wilcox High School (8/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,799,000. $0 HOA (SFH). Estimated Prop 13 property tax: ~$21,588/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1954. Cooling system: Wall/None. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 2 ba with 1,080 sq ft. Lot size is 6,630 sq ft. Meets nice-to-have yard requirement (> 6,000 sq ft).</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">✅ Single-Family Home<br>⚠️ Mixed Schools<br>✅ 2+ Baths<br>✅ Big Yard (> 6k)<br>❌ No Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                    <div class="analysis-point" style="border-color: rgba(239, 68, 68, 0.3);">
+                        <div class="analysis-label" style="color: var(--danger)">Red Flags</div>
+                        <div class="analysis-content">🚩 <strong>Open House:</strong> No Saturday open house scheduled.<br></div>
+                    </div>
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Santa-Clara/1718-Pomeroy-Ave-95051/home/1175186" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=1718+Pomeroy+Ave,+Santa+Clara,+CA+95051" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 1263206 -->
+            <div class="property-card" id="card-1263206">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">3385 Valley Square Ln, San Jose, CA 95117</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,925,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">3 Bed • 2 Bath • 1,504 SqFt</div>
+                <div class="property-subspecs">6,480 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">San Jose</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 95117. Schools: George C. Payne Elementary School (6/10), Moreland Middle School (7/10), Prospect High School (8/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,925,000. $0 HOA (SFH). Estimated Prop 13 property tax: ~$23,100/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1965. Cooling system: Wall/None. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 2 ba with 1,504 sq ft. Lot size is 6,480 sq ft. Meets nice-to-have yard requirement (> 6,000 sq ft).</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">✅ Single-Family Home<br>⚠️ Mixed Schools<br>✅ 2+ Baths<br>✅ Big Yard (> 6k)<br>❌ No Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                    <div class="analysis-point" style="border-color: rgba(239, 68, 68, 0.3);">
+                        <div class="analysis-label" style="color: var(--danger)">Red Flags</div>
+                        <div class="analysis-content">🚩 <strong>Open House:</strong> No Saturday open house scheduled.<br></div>
+                    </div>
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/San-Jose/3385-Valley-Square-Ln-95117/home/1263206" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=3385+Valley+Square+Ln,+San+Jose,+CA+95117" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 1673333 -->
+            <div class="property-card" id="card-1673333">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">3362 Valley Square Ln, San Jose, CA 95117</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$2,100,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">4 Bed • 2.5 Bath • 2,007 SqFt</div>
+                <div class="property-subspecs">6,893 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">San Jose</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 95117. Schools: George C. Payne Elementary School (6/10), Moreland Middle School (7/10), Prospect High School (8/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $2,100,000. $0 HOA (SFH). Estimated Prop 13 property tax: ~$25,200/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1965. Equipped with Central AC.</div><div class="analysis-content"><strong>Space:</strong> 4 bd / 2.5 ba with 2,007 sq ft. Lot size is 6,893 sq ft. Meets nice-to-have yard requirement (> 6,000 sq ft).</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">✅ Single-Family Home<br>⚠️ Mixed Schools<br>✅ 2+ Baths<br>✅ Big Yard (> 6k)<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                    <div class="analysis-point" style="border-color: rgba(239, 68, 68, 0.3);">
+                        <div class="analysis-label" style="color: var(--danger)">Red Flags</div>
+                        <div class="analysis-content">🚩 <strong>Open House:</strong> No Saturday open house scheduled.<br></div>
+                    </div>
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/San-Jose/3362-Valley-Square-Ln-95117/home/1673333" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=3362+Valley+Square+Ln,+San+Jose,+CA+95117" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 1687536 -->
+            <div class="property-card" id="card-1687536">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">1375 Colleen Way, Campbell, CA 95008</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,895,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">4 Bed • 2 Bath • 1,526 SqFt</div>
+                <div class="property-subspecs">6,390 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Campbell</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 95008. Schools: George C. Payne Elementary School (6/10), Moreland Middle School (7/10), Westmont High School (9/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,895,000. $0 HOA (SFH). Estimated Prop 13 property tax: ~$22,740/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1967. Equipped with Central AC. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 4 bd / 2 ba with 1,526 sq ft. Lot size is 6,390 sq ft. Meets nice-to-have yard requirement (> 6,000 sq ft).</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">✅ Single-Family Home<br>⚠️ Mixed Schools<br>✅ 2+ Baths<br>✅ Big Yard (> 6k)<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                    <div class="analysis-point" style="border-color: rgba(239, 68, 68, 0.3);">
+                        <div class="analysis-label" style="color: var(--danger)">Red Flags</div>
+                        <div class="analysis-content">🚩 <strong>Open House:</strong> No Saturday open house scheduled.<br></div>
+                    </div>
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Campbell/1375-Colleen-Way-95008/home/1687536" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=1375+Colleen+Way,+Campbell,+CA+95008" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+    </div>
+</body>
+</html>
