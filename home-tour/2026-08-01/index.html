@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Tour Dashboard | May 10</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-primary: #38bdf8;
+            --accent-secondary: #818cf8;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --success: #22c55e;
+            --warning: #eab308;
+            --danger: #ef4444;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            padding-bottom: 50px;
+            background-image: radial-gradient(circle at top right, #1e293b, #0f172a);
+            background-attachment: fixed;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to bottom, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            margin: 40px 0 20px;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline-section {
+            margin-bottom: 40px;
+            padding: 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .timeline-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .time {
+            width: 90px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .property-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .property-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            scroll-margin-top: 20px;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .property-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .property-address {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .property-specs {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .property-subspecs {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 16px;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .badge-green { background: rgba(34, 197, 94, 0.1); color: #4ade80; border-color: rgba(34, 197, 94, 0.2); }
+        .badge-yellow { background: rgba(234, 179, 8, 0.1); color: #facc15; border-color: rgba(234, 179, 8, 0.2); }
+        .badge-red { background: rgba(239, 68, 68, 0.1); color: #f87171; border-color: rgba(239, 68, 68, 0.2); }
+        .badge-blue { background: rgba(56, 189, 248, 0.1); color: #38bdf8; border-color: rgba(56, 189, 248, 0.2); }
+
+        .quick-visual {
+            margin-bottom: 16px;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent-secondary);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+        }
+
+        .analysis-point {
+            margin-bottom: 12px;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .analysis-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--accent-primary);
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .analysis-content {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .card-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary { background: var(--accent-primary); color: #000; }
+        .btn-secondary { background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid var(--glass-border); }
+
+        details { margin-top: 15px; }
+        details summary {
+            list-style: none;
+            cursor: pointer;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            transition: all 0.2s;
+        }
+        details summary:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+        details summary::-webkit-details-marker { display: none; }
+        details[open] summary {
+            margin-bottom: 15px;
+            border-style: solid;
+            color: #fff;
+            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--accent-primary);
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8rem; }
+            .property-address { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-badge">Aug 01 • Buyer Tour (9 Homes)</div>
+            <h1>Open House Dashboard</h1>
+            <p style="color:var(--text-dim); margin-top: 10px;">1PM start: Mountain View → Cupertino → back to Mountain View (Bel Air Ct 2:30PM open) → Santa Clara → West San Jose → Campbell. 9 stops, done by ~5:15PM. ⚠️ Tight finish — last few stops have thin margin before closing.</p>
+        </header>
+
+        <div class="timeline-section">
+            <h2 style="font-size:1.1rem; margin-bottom:15px; color:var(--text-main)">📅 Today's Itinerary</h2>
+<div style="font-size: 0.8rem; color: var(--accent-secondary); margin-top: 15px; margin-bottom: 10px;">CLUSTER 1: MOUNTAIN VIEW</div>
+<a href="#card-41397085" class="timeline-item"><div class="time">01:00 PM</div><div>201 Pine Way</div></a>
+<div style="font-size: 0.8rem; color: var(--accent-secondary); margin-top: 15px; margin-bottom: 10px;">CLUSTER 2: CUPERTINO</div>
+<a href="#card-1830328" class="timeline-item"><div class="time">01:30 PM</div><div>22963 Longdown Rd</div></a>
+<div style="font-size: 0.8rem; color: var(--accent-secondary); margin-top: 15px; margin-bottom: 10px;">CLUSTER 1: MOUNTAIN VIEW</div>
+<a href="#card-12177634" class="timeline-item"><div class="time">02:30 PM</div><div>181 Bel Air Ct</div></a>
+<div style="font-size: 0.8rem; color: var(--accent-secondary); margin-top: 15px; margin-bottom: 10px;">CLUSTER 3: SANTA CLARA</div>
+<a href="#card-675907" class="timeline-item"><div class="time">03:15 PM</div><div>1850 Briarwood Dr</div></a>
+<a href="#card-1280348" class="timeline-item"><div class="time">03:35 PM</div><div>3416 Forbes Ave</div></a>
+<div style="font-size: 0.8rem; color: var(--accent-secondary); margin-top: 15px; margin-bottom: 10px;">CLUSTER 4: WEST SAN JOSE</div>
+<a href="#card-887353" class="timeline-item"><div class="time">03:55 PM</div><div>5245 Bucknall Rd</div></a>
+<a href="#card-756223" class="timeline-item"><div class="time">04:15 PM</div><div>4794 Parkwest Dr</div></a>
+<div style="font-size: 0.8rem; color: var(--accent-secondary); margin-top: 15px; margin-bottom: 10px;">CLUSTER 5: CAMPBELL</div>
+<a href="#card-1778390" class="timeline-item"><div class="time">04:35 PM</div><div>783 Loyalton Dr</div></a>
+<div style="font-size: 0.8rem; color: var(--accent-secondary); margin-top: 15px; margin-bottom: 10px;">CLUSTER 4: WEST SAN JOSE</div>
+<a href="#card-1789803" class="timeline-item"><div class="time">04:55 PM</div><div>1563 Clarita Ave</div></a>
+
+        </div>
+
+        <div class="section-title">📍 The Route</div>
+        <div class="property-grid">
+
+            <!-- Card 41397085 -->
+            <div class="property-card" id="card-41397085">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">201 Pine Way, Mountain View, CA 94041</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,698,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">2 Bed • 2 Bath • 1,074 SqFt</div>
+                <div class="property-subspecs">1,950 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-green">Strong Buy</div> <div class="badge badge-blue">Mountain View</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Priority Tour! Passes all Must-Haves and offers great value.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 94041. Schools: Edith Landels Elementary School (8/10), Isaac Newton Graham Middle School (8/10), Mountain View High School (10/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,698,000. $181/mo HOA. Estimated Prop 13 property tax: ~$20,376/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 2012. Equipped with Central AC. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 2 bd / 2 ba with 1,074 sq ft. Lot size is 1,950 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">✅ Single-Family Home<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>❌ Small Yard<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Mountain-View/201-Pine-Way-94041/home/41397085" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=201+Pine+Way,+Mountain+View,+CA+94041" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 1830328 -->
+            <div class="property-card" id="card-1830328">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">22963 Longdown Rd, Cupertino, CA 95014</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,799,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">4 Bed • 2.5 Bath • 1,936 SqFt</div>
+                <div class="property-subspecs">1,909 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Cupertino</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 95014. Schools: Stevens Creek Elementary School (9/10), John F. Kennedy Middle School (9/10), Monta Vista High School (10/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,799,000. $440/mo HOA. Estimated Prop 13 property tax: ~$21,588/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1974. Cooling system: Wall/None. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 4 bd / 2.5 ba with 1,936 sq ft. Lot size is 1,909 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">❌ Non-SFH<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>❌ Small Yard<br>❌ No Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Cupertino/22963-Longdown-Rd-95014/home/1830328" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=22963+Longdown+Rd,+Cupertino,+CA+95014" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 12177634 -->
+            <div class="property-card" id="card-12177634">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">181 Bel Air Ct, Mountain View, CA 94043</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,188,888</div>
+                    </div>
+                </div>
+                <div class="property-specs">3 Bed • 2.5 Bath • 1,369 SqFt</div>
+                <div class="property-subspecs">898 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Mountain View</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 94043. Schools: Jose Antonio Vargas Elementary (8/10), Crittenden Middle School (9/10), Mountain View High School (10/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,188,888. $255/mo HOA. Estimated Prop 13 property tax: ~$14,267/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 2006. Equipped with Central AC. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 2.5 ba with 1,369 sq ft. Lot size is 898 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">❌ Non-SFH<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>❌ Small Yard<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Mountain-View/181-Bel-Air-Ct-94043/home/12177634" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=181+Bel+Air+Ct,+Mountain+View,+CA+94043" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 675907 -->
+            <div class="property-card" id="card-675907">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">1850 Briarwood Dr, Santa Clara, CA 95051</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,750,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">3 Bed • 3 Bath • 1,608 SqFt</div>
+                <div class="property-subspecs">5,454 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Santa Clara</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 95051. Schools: Briarwood Elementary School (6/10), Juan Cabrillo Middle School (7/10), Adrian Wilcox High School (8/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,750,000. $0 HOA (SFH). Estimated Prop 13 property tax: ~$21,000/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1954. Equipped with Central AC.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 3 ba with 1,608 sq ft. Lot size is 5,454 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">✅ Single-Family Home<br>⚠️ Mixed Schools<br>✅ 2+ Baths<br>❌ Small Yard<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Santa-Clara/1850-Briarwood-Dr-95051/home/675907" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=1850+Briarwood+Dr,+Santa+Clara,+CA+95051" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 1280348 -->
+            <div class="property-card" id="card-1280348">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">3416 Forbes Ave, Santa Clara, CA 95051</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,850,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">4 Bed • 2 Bath • 1,418 SqFt</div>
+                <div class="property-subspecs">6,100 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-green">Strong Buy</div> <div class="badge badge-blue">Santa Clara</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Priority Tour! Passes all Must-Haves and offers great value.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 95051. Schools: Sutter Elementary School (7/10), Buchser Middle School (8/10), Santa Clara High School (8/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,850,000. $0 HOA (SFH). Estimated Prop 13 property tax: ~$22,200/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1961. Equipped with Central AC.</div><div class="analysis-content"><strong>Space:</strong> 4 bd / 2 ba with 1,418 sq ft. Lot size is 6,100 sq ft. Meets nice-to-have yard requirement (> 6,000 sq ft).</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">✅ Single-Family Home<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>✅ Big Yard (> 6k)<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Santa-Clara/3416-Forbes-Ave-95051/home/1280348" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=3416+Forbes+Ave,+Santa+Clara,+CA+95051" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 887353 -->
+            <div class="property-card" id="card-887353">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">5245 Bucknall Rd, San Jose, CA 95130</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,850,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">3 Bed • 2 Bath • 1,544 SqFt</div>
+                <div class="property-subspecs">6,800 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-green">Strong Buy</div> <div class="badge badge-blue">San Jose</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Priority Tour! Passes all Must-Haves and offers great value.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 95130. Schools: Gussie M. Baker Elementary School (8/10), Moreland Middle School (7/10), Prospect High School (8/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,850,000. $0 HOA (SFH). Estimated Prop 13 property tax: ~$22,200/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1960. Cooling system: Wall/None. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 2 ba with 1,544 sq ft. Lot size is 6,800 sq ft. Meets nice-to-have yard requirement (> 6,000 sq ft).</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">✅ Single-Family Home<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>✅ Big Yard (> 6k)<br>❌ No Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/San-Jose/5245-Bucknall-Rd-95130/home/887353" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=5245+Bucknall+Rd,+San+Jose,+CA+95130" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 756223 -->
+            <div class="property-card" id="card-756223">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">4794 Parkwest Dr, San Jose, CA 95130</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,580,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">3 Bed • 2 Bath • 1,185 SqFt</div>
+                <div class="property-subspecs">6,800 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-green">Strong Buy</div> <div class="badge badge-blue">San Jose</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Priority Tour! Passes all Must-Haves and offers great value.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 95130. Schools: Latimer Elementary School (8/10), Prospect High School (8/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,580,000. $0 HOA (SFH). Estimated Prop 13 property tax: ~$18,960/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1958. Equipped with Central AC. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 2 ba with 1,185 sq ft. Lot size is 6,800 sq ft. Meets nice-to-have yard requirement (> 6,000 sq ft).</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">✅ Single-Family Home<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>✅ Big Yard (> 6k)<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/San-Jose/4794-Parkwest-Dr-95130/home/756223" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=4794+Parkwest+Dr,+San+Jose,+CA+95130" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 1778390 -->
+            <div class="property-card" id="card-1778390">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">783 Loyalton Dr, Campbell, CA 95008</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,998,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">4 Bed • 2 Bath • 1,702 SqFt</div>
+                <div class="property-subspecs">6,120 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-green">Strong Buy</div> <div class="badge badge-blue">Campbell</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Priority Tour! Passes all Must-Haves and offers great value.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 95008. Schools: Forest Hill Elementary School (9/10), Rolling Hills Middle School (9/10), Westmont High School (9/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,998,000. $0 HOA (SFH). Estimated Prop 13 property tax: ~$23,976/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1961. Equipped with Central AC. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 4 bd / 2 ba with 1,702 sq ft. Lot size is 6,120 sq ft. Meets nice-to-have yard requirement (> 6,000 sq ft).</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">✅ Single-Family Home<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>✅ Big Yard (> 6k)<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Campbell/783-Loyalton-Dr-95008/home/1778390" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=783+Loyalton+Dr,+Campbell,+CA+95008" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 1789803 -->
+            <div class="property-card" id="card-1789803">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">1563 Clarita Ave, San Jose, CA 95130</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,649,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">4 Bed • 2 Bath • 1,528 SqFt</div>
+                <div class="property-subspecs">6,272 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">San Jose</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 95130. Schools: George C. Payne Elementary School (6/10), Moreland Middle School (7/10), Prospect High School (8/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,649,000. $0 HOA (SFH). Estimated Prop 13 property tax: ~$19,788/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1967. Cooling system: Wall/None. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 4 bd / 2 ba with 1,528 sq ft. Lot size is 6,272 sq ft. Meets nice-to-have yard requirement (> 6,000 sq ft).</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">✅ Single-Family Home<br>⚠️ Mixed Schools<br>✅ 2+ Baths<br>✅ Big Yard (> 6k)<br>❌ No Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/San-Jose/1563-Clarita-Ave-95130/home/1789803" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=1563+Clarita+Ave,+San+Jose,+CA+95130" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+        <div class="section-title" style="margin-top: 40px; color: var(--danger);">🔴 Excluded Properties (Skips)</div>
+        <p style="color: var(--text-dim); margin-bottom: 20px; font-size: 0.9rem;">The following homes from the queue failed critical criteria and are excluded from the tour route.</p>
+        <div class="property-grid">
+
+                <!-- Card 799372 -->
+                <div class="property-card" id="card-799372" style="opacity: 0.75; border: 1px solid rgba(239, 68, 68, 0.15);">
+                    <div class="property-header">
+                        <div>
+                            <div class="property-address" style="color: var(--text-dim);">Saratoga, CA 95070</div>
+                        </div>
+                        <div style="text-align: right">
+                            <div style="color:var(--text-dim); font-weight:700">$2,425,000</div>
+                        </div>
+                    </div>
+                    <div class="property-specs">3 Bed • 2 Bath • 1,320 SqFt</div>
+                    <div class="property-subspecs">8,625 SqFt Lot</div>
+                    <div class="badges">
+                        <div class="badge badge-red">Skip</div> <div class="badge badge-blue">Saratoga</div>
+                    </div>
+                    <div class="quick-visual" style="border-left-color: var(--danger);">❌ <b>Skip Reason:</b> Fails critical must-haves or has deal-breakers.</div>
+                    <details>
+                        <summary style="color: var(--text-dim);">View Home Details</summary>
+                        <div class="analysis-point">
+                            <div class="analysis-label">5 Core Dimensions</div>
+                            <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 95070. Schools: Country Lane Elementary School (9/10), Moreland Middle School (7/10), Prospect High School (8/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $2,425,000 ⚠️ OVER $2.2M CAP. $0 HOA (SFH). Estimated Prop 13 property tax: ~$29,100/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1955. Cooling system: Wall/None. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 2 ba with 1,320 sq ft. Lot size is 8,625 sq ft. Meets nice-to-have yard requirement (> 6,000 sq ft).</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                        </div>
+                        <div class="analysis-point">
+                            <div class="analysis-label">3-2-1 Framework Check</div>
+                            <div class="analysis-content">✅ Single-Family Home<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>✅ Big Yard (> 6k)<br>❌ No Central AC<br>❌ Over $2.2M Budget</div>
+                        </div>
+                        
+                        <div class="analysis-point" style="border-color: rgba(239, 68, 68, 0.3);">
+                            <div class="analysis-label" style="color: var(--danger)">Red Flags / Reason for Skip</div>
+                            <div class="analysis-content">🚩 <strong>Budget:</strong> Asking $2,425,000 exceeds $2.2M cap.<br></div>
+                        </div>
+                    </details>
+                    <div class="card-actions">
+                        <a href="https://www.redfin.com/CA/Saratoga/Undisclosed-address-95070/home/799372" target="_blank" class="btn btn-secondary">Redfin</a>
+                    </div>
+                </div>
+    
+                <!-- Card 814961 -->
+                <div class="property-card" id="card-814961" style="opacity: 0.75; border: 1px solid rgba(239, 68, 68, 0.15);">
+                    <div class="property-header">
+                        <div>
+                            <div class="property-address" style="color: var(--text-dim);">5100 Montreal Dr, San Jose, CA 95130</div>
+                        </div>
+                        <div style="text-align: right">
+                            <div style="color:var(--text-dim); font-weight:700">$1,799,000</div>
+                        </div>
+                    </div>
+                    <div class="property-specs">3 Bed • 1 Bath • 1,036 SqFt</div>
+                    <div class="property-subspecs">6,000 SqFt Lot</div>
+                    <div class="badges">
+                        <div class="badge badge-red">Skip</div> <div class="badge badge-blue">San Jose</div>
+                    </div>
+                    <div class="quick-visual" style="border-left-color: var(--danger);">❌ <b>Skip Reason:</b> Only 1 bathroom (fails 2+ Baths must-have).</div>
+                    <details>
+                        <summary style="color: var(--text-dim);">View Home Details</summary>
+                        <div class="analysis-point">
+                            <div class="analysis-label">5 Core Dimensions</div>
+                            <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 95130. Schools: Forest Hill Elementary School (9/10), Rolling Hills Middle School (9/10), Westmont High School (9/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,799,000. $0 HOA (SFH). Estimated Prop 13 property tax: ~$21,588/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1959. Cooling system: Wall/None.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 1 ba with 1,036 sq ft. Lot size is 6,000 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                        </div>
+                        <div class="analysis-point">
+                            <div class="analysis-label">3-2-1 Framework Check</div>
+                            <div class="analysis-content">✅ Single-Family Home<br>✅ Good Schools (7+)<br>❌ 1 Bath<br>❌ Small Yard<br>❌ No Central AC<br>✅ Under $2.2M Budget</div>
+                        </div>
+                        
+                        <div class="analysis-point" style="border-color: rgba(239, 68, 68, 0.3);">
+                            <div class="analysis-label" style="color: var(--danger)">Red Flags / Reason for Skip</div>
+                            <div class="analysis-content">🚩 <strong>Baths:</strong> Only 1 bathroom. Fails family living requirement.<br>🚩 <strong>Open House:</strong> No Saturday open house scheduled.<br></div>
+                        </div>
+                    </details>
+                    <div class="card-actions">
+                        <a href="https://www.redfin.com/CA/San-Jose/5100-Montreal-Dr-95130/home/814961" target="_blank" class="btn btn-secondary">Redfin</a>
+                    </div>
+                </div>
+    
+                <!-- Card 1126197 -->
+                <div class="property-card" id="card-1126197" style="opacity: 0.75; border: 1px solid rgba(239, 68, 68, 0.15);">
+                    <div class="property-header">
+                        <div>
+                            <div class="property-address" style="color: var(--text-dim);">18570 Montpere Way, Saratoga, CA 95070</div>
+                        </div>
+                        <div style="text-align: right">
+                            <div style="color:var(--text-dim); font-weight:700">$2,399,000</div>
+                        </div>
+                    </div>
+                    <div class="property-specs">4 Bed • 2.5 Bath • 2,114 SqFt</div>
+                    <div class="property-subspecs">9,184 SqFt Lot</div>
+                    <div class="badges">
+                        <div class="badge badge-red">Skip</div> <div class="badge badge-blue">Saratoga</div>
+                    </div>
+                    <div class="quick-visual" style="border-left-color: var(--danger);">❌ <b>Skip Reason:</b> Fails critical must-haves or has deal-breakers.</div>
+                    <details>
+                        <summary style="color: var(--text-dim);">View Home Details</summary>
+                        <div class="analysis-point">
+                            <div class="analysis-label">5 Core Dimensions</div>
+                            <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 95070. Schools: Marshall Lane Elementary School (9/10), Rolling Hills Middle School (9/10), Westmont High School (9/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $2,399,000 ⚠️ OVER $2.2M CAP. $0 HOA (SFH). Estimated Prop 13 property tax: ~$28,788/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1955. Cooling system: Wall/None. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 4 bd / 2.5 ba with 2,114 sq ft. Lot size is 9,184 sq ft. Meets nice-to-have yard requirement (> 6,000 sq ft).</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                        </div>
+                        <div class="analysis-point">
+                            <div class="analysis-label">3-2-1 Framework Check</div>
+                            <div class="analysis-content">✅ Single-Family Home<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>✅ Big Yard (> 6k)<br>❌ No Central AC<br>❌ Over $2.2M Budget</div>
+                        </div>
+                        
+                        <div class="analysis-point" style="border-color: rgba(239, 68, 68, 0.3);">
+                            <div class="analysis-label" style="color: var(--danger)">Red Flags / Reason for Skip</div>
+                            <div class="analysis-content">🚩 <strong>Budget:</strong> Asking $2,399,000 exceeds $2.2M cap.<br></div>
+                        </div>
+                    </details>
+                    <div class="card-actions">
+                        <a href="https://www.redfin.com/CA/Saratoga/18570-Montpere-Way-95070/home/1126197" target="_blank" class="btn btn-secondary">Redfin</a>
+                    </div>
+                </div>
+    
+                <!-- Card 778963 -->
+                <div class="property-card" id="card-778963" style="opacity: 0.75; border: 1px solid rgba(239, 68, 68, 0.15);">
+                    <div class="property-header">
+                        <div>
+                            <div class="property-address" style="color: var(--text-dim);">23000 Stonebridge, Cupertino, CA 95014</div>
+                        </div>
+                        <div style="text-align: right">
+                            <div style="color:var(--text-dim); font-weight:700">$1,988,000</div>
+                        </div>
+                    </div>
+                    <div class="property-specs">3 Bed • 2 Bath • 2,202 SqFt</div>
+                    <div class="property-subspecs">3,347 SqFt Lot</div>
+                    <div class="badges">
+                        <div class="badge badge-red">Skip</div> <div class="badge badge-blue">Cupertino</div>
+                    </div>
+                    <div class="quick-visual" style="border-left-color: var(--danger);">❌ <b>Skip Reason:</b> Fails critical must-haves or has deal-breakers.</div>
+                    <details>
+                        <summary style="color: var(--text-dim);">View Home Details</summary>
+                        <div class="analysis-point">
+                            <div class="analysis-label">5 Core Dimensions</div>
+                            <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 95014. Schools: Stevens Creek Elementary School (9/10), John F. Kennedy Middle School (9/10), Monta Vista High School (10/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,988,000. $890/mo HOA. Estimated Prop 13 property tax: ~$23,856/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1980. Equipped with Central AC. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 2 ba with 2,202 sq ft. Lot size is 3,347 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                        </div>
+                        <div class="analysis-point">
+                            <div class="analysis-label">3-2-1 Framework Check</div>
+                            <div class="analysis-content">❌ Non-SFH<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>❌ Small Yard<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                        </div>
+                        
+                    </details>
+                    <div class="card-actions">
+                        <a href="https://www.redfin.com/CA/Cupertino/23000-Stonebridge-95014/home/778963" target="_blank" class="btn btn-secondary">Redfin</a>
+                    </div>
+                </div>
+    
+                <!-- Card 926038 -->
+                <div class="property-card" id="card-926038" style="opacity: 0.75; border: 1px solid rgba(239, 68, 68, 0.15);">
+                    <div class="property-header">
+                        <div>
+                            <div class="property-address" style="color: var(--text-dim);">1092 Kildare Ave, Sunnyvale, CA 94087</div>
+                        </div>
+                        <div style="text-align: right">
+                            <div style="color:var(--text-dim); font-weight:700">$2,399,000</div>
+                        </div>
+                    </div>
+                    <div class="property-specs">3 Bed • 2 Bath • 1,524 SqFt</div>
+                    <div class="property-subspecs">7,000 SqFt Lot</div>
+                    <div class="badges">
+                        <div class="badge badge-red">Skip</div> <div class="badge badge-blue">Sunnyvale</div>
+                    </div>
+                    <div class="quick-visual" style="border-left-color: var(--danger);">❌ <b>Skip Reason:</b> Fails critical must-haves or has deal-breakers.</div>
+                    <details>
+                        <summary style="color: var(--text-dim);">View Home Details</summary>
+                        <div class="analysis-point">
+                            <div class="analysis-label">5 Core Dimensions</div>
+                            <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 94087. Schools: Laurelwood Elementary School (10/10), Marian A. Peterson Middle School (9/10), Adrian Wilcox High School (8/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $2,399,000 ⚠️ OVER $2.2M CAP. $0 HOA (SFH). Estimated Prop 13 property tax: ~$28,788/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1957. Cooling system: Wall/None.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 2 ba with 1,524 sq ft. Lot size is 7,000 sq ft. Meets nice-to-have yard requirement (> 6,000 sq ft).</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                        </div>
+                        <div class="analysis-point">
+                            <div class="analysis-label">3-2-1 Framework Check</div>
+                            <div class="analysis-content">✅ Single-Family Home<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>✅ Big Yard (> 6k)<br>❌ No Central AC<br>❌ Over $2.2M Budget</div>
+                        </div>
+                        
+                        <div class="analysis-point" style="border-color: rgba(239, 68, 68, 0.3);">
+                            <div class="analysis-label" style="color: var(--danger)">Red Flags / Reason for Skip</div>
+                            <div class="analysis-content">🚩 <strong>Budget:</strong> Asking $2,399,000 exceeds $2.2M cap.<br></div>
+                        </div>
+                    </details>
+                    <div class="card-actions">
+                        <a href="https://www.redfin.com/CA/Sunnyvale/1092-Kildare-Ave-94087/home/926038" target="_blank" class="btn btn-secondary">Redfin</a>
+                    </div>
+                </div>
+    
+            </div>
+
+    </div>
+</body>
+</html>
