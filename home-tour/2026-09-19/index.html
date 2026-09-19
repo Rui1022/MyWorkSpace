@@ -266,6 +266,54 @@
             border-color: var(--accent-primary);
         }
 
+        .ask-question {
+            margin-bottom: 16px;
+            padding: 12px 14px;
+            background: rgba(234, 179, 8, 0.08);
+            border-left: 3px solid var(--warning);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+        }
+
+        .ask-question b { color: #facc15; }
+        .ask-question ul { margin: 6px 0 0 18px; padding: 0; }
+        .ask-question li { margin-bottom: 4px; }
+
+        .question-section {
+            margin-bottom: 40px;
+            padding: 24px;
+            background: var(--card-bg);
+            border: 1px solid rgba(234, 179, 8, 0.25);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .question-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 8px;
+        }
+
+        .question-list li {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .question-list li:last-child { border-bottom: none; }
+
+        .question-list .qnum {
+            color: var(--warning);
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            flex-shrink: 0;
+            width: 22px;
+        }
+
         @media (max-width: 600px) {
             header h1 { font-size: 1.8rem; }
             .property-address { font-size: 1.2rem; }
@@ -296,6 +344,21 @@
 <a href="#card-95957157" class="timeline-item"><div class="time">03:55 PM</div><div>306 Santa Diana Ter</div></a>
 <a href="#card-41396177" class="timeline-item"><div class="time">04:15 PM</div><div>933 Highland Ter</div></a>
 
+        </div>
+
+        <div class="question-section">
+            <h2 style="font-size:1.1rem; margin-bottom:5px; color:var(--text-main)">🗣️ General Questions — Ask at Every Open House</h2>
+            <p style="color:var(--text-dim); font-size:0.85rem;">All 9 stops are townhomes/condos — these HOA due-diligence questions apply everywhere on today's route.</p>
+            <ul class="question-list">
+                <li><span class="qnum">1</span><span>HOA monthly fee — what exactly does it cover? (water, trash, exterior maintenance, roof, master insurance, earthquake coverage)</span></li>
+                <li><span class="qnum">2</span><span>What % funded is the HOA reserve fund? Is there a recent reserve study?</span></li>
+                <li><span class="qnum">3</span><span>Any pending or planned special assessments (roof, siding, repaving, garage waterproofing)?</span></li>
+                <li><span class="qnum">4</span><span>Is the HOA currently involved in any litigation?</span></li>
+                <li><span class="qnum">5</span><span>What's the rental cap / owner-occupancy ratio? Is there a waitlist to rent out a unit?</span></li>
+                <li><span class="qnum">6</span><span>What does the master insurance policy cover vs. what do I need an HO6 policy for?</span></li>
+                <li><span class="qnum">7</span><span>How many assigned parking spots come with the unit? Any guest parking rules?</span></li>
+                <li><span class="qnum">8</span><span>Pet policy — any restrictions on number, size, or breed?</span></li>
+            </ul>
         </div>
 
         <div class="section-title">📍 The Route</div>
@@ -385,6 +448,12 @@
                     <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Palo Alto</div>
                 </div>
                 <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <div class="ask-question">⚠️ <b>Ask This Host:</b>
+                    <ul>
+                        <li>Redfin Flood Factor is 6/10 — 80%+ estimated chance of a flood reaching the building in 30 years. Has this unit ever actually flooded? Is flood insurance required by the lender, and roughly how much?</li>
+                        <li>This is a newer (2011) community — is there a Mello-Roos / CFD special tax on the property tax bill, and how many years remain on it?</li>
+                    </ul>
+                </div>
                 <details>
                     <summary>View Home Report</summary>
                     <div class="analysis-point">
@@ -453,6 +522,12 @@
                     <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Mountain View</div>
                 </div>
                 <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <div class="ask-question">⚠️ <b>Ask This Host:</b>
+                    <ul>
+                        <li>Oldest unit on today's route (built 1979) and has the highest HOA on the tour ($575/mo) — when was the roof last replaced, and what's the plumbing material (copper vs. old polybutylene)?</li>
+                        <li>Any exterior painting / re-roofing / siding project planned or budgeted by the HOA soon?</li>
+                    </ul>
+                </div>
                 <details>
                     <summary>View Home Report</summary>
                     <div class="analysis-point">
@@ -487,6 +562,11 @@
                     <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Mountain View</div>
                 </div>
                 <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <div class="ask-question">⚠️ <b>Ask This Host:</b>
+                    <ul>
+                        <li>Radius at Whisman Station is a newer (2018) master-planned community — is there a Mello-Roos / CFD special tax on top of the base property tax, and how many years remain on it?</li>
+                    </ul>
+                </div>
                 <details>
                     <summary>View Home Report</summary>
                     <div class="analysis-point">
@@ -521,6 +601,12 @@
                     <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Sunnyvale</div>
                 </div>
                 <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <div class="ask-question">⚠️ <b>Ask This Host:</b>
+                    <ul>
+                        <li>14 days on Redfin — noticeably longer than the other stops today (2-8 days) in a market where 27% of homes go under contract within a week. Why hasn't it sold yet — has there been a fallen-through offer, or any disclosed issue?</li>
+                        <li>Listing mentions the ground-floor suite is "ideal for rental income" — does the HOA actually allow renting out a room/unit, and is there a cap?</li>
+                    </ul>
+                </div>
                 <details>
                     <summary>View Home Report</summary>
                     <div class="analysis-point">
@@ -555,6 +641,12 @@
                     <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Sunnyvale</div>
                 </div>
                 <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <div class="ask-question">⚠️ <b>Ask This Host:</b>
+                    <ul>
+                        <li>Listed as a PUD, not a standard condo — does the buyer own the land under the unit? How does that change insurance/maintenance responsibility vs. the other condos/townhomes today?</li>
+                        <li>Newer (2014) community — is there a Mello-Roos / CFD special tax, and how many years remain?</li>
+                    </ul>
+                </div>
                 <details>
                     <summary>View Home Report</summary>
                     <div class="analysis-point">
@@ -589,6 +681,11 @@
                     <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Sunnyvale</div>
                 </div>
                 <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <div class="ask-question">⚠️ <b>Ask This Host:</b>
+                    <ul>
+                        <li>Highest HOA on today's Sunnyvale cluster ($501/mo) — newer (2011) community, so ask if there's a Mello-Roos / CFD special tax and how many years remain.</li>
+                    </ul>
+                </div>
                 <details>
                     <summary>View Home Report</summary>
                     <div class="analysis-point">
