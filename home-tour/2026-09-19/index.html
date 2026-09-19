@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open House Tour Dashboard | September 19, 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-primary: #38bdf8;
+            --accent-secondary: #818cf8;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --success: #22c55e;
+            --warning: #eab308;
+            --danger: #ef4444;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            padding-bottom: 50px;
+            background-image: radial-gradient(circle at top right, #1e293b, #0f172a);
+            background-attachment: fixed;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to bottom, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            margin: 40px 0 20px;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline-section {
+            margin-bottom: 40px;
+            padding: 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .timeline-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .time {
+            width: 90px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .property-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .property-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            scroll-margin-top: 20px;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .property-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .property-address {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .property-specs {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .property-subspecs {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 16px;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .badge-green { background: rgba(34, 197, 94, 0.1); color: #4ade80; border-color: rgba(34, 197, 94, 0.2); }
+        .badge-yellow { background: rgba(234, 179, 8, 0.1); color: #facc15; border-color: rgba(234, 179, 8, 0.2); }
+        .badge-red { background: rgba(239, 68, 68, 0.1); color: #f87171; border-color: rgba(239, 68, 68, 0.2); }
+        .badge-blue { background: rgba(56, 189, 248, 0.1); color: #38bdf8; border-color: rgba(56, 189, 248, 0.2); }
+
+        .quick-visual {
+            margin-bottom: 16px;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent-secondary);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+        }
+
+        .analysis-point {
+            margin-bottom: 12px;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .analysis-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--accent-primary);
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .analysis-content {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .card-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary { background: var(--accent-primary); color: #000; }
+        .btn-secondary { background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid var(--glass-border); }
+
+        details { margin-top: 15px; }
+        details summary {
+            list-style: none;
+            cursor: pointer;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            transition: all 0.2s;
+        }
+        details summary:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+        details summary::-webkit-details-marker { display: none; }
+        details[open] summary {
+            margin-bottom: 15px;
+            border-style: solid;
+            color: #fff;
+            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--accent-primary);
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8rem; }
+            .property-address { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-badge">Sep 19 • Buyer Tour (9 Homes)</div>
+            <h1>Open House Dashboard</h1>
+            <p style="color:var(--text-dim); margin-top: 10px;">Optimized rapid northbound itinerary (9 full visits, 0 drive-bys). Starting from West SJ/Campbell.</p>
+        </header>
+
+        <div class="timeline-section">
+            <h2 style="font-size:1.1rem; margin-bottom:15px; color:var(--text-main)">📅 Today's Itinerary</h2>
+<div style="font-size: 0.8rem; color: var(--accent-secondary); margin-top: 15px; margin-bottom: 10px;">CLUSTER 1: NW MOUNTAIN VIEW / PALO ALTO</div>
+<a href="#card-2123005" class="timeline-item"><div class="time">01:00 PM</div><div>1913 Vida Ct</div></a>
+<a href="#card-23047434" class="timeline-item"><div class="time">01:30 PM</div><div>1903 Cambridge Dr</div></a>
+<a href="#card-41395650" class="timeline-item"><div class="time">01:55 PM</div><div>3281 Berryessa St #3</div></a>
+<div style="font-size: 0.8rem; color: var(--accent-secondary); margin-top: 15px; margin-bottom: 10px;">CLUSTER 2: CENTRAL MOUNTAIN VIEW</div>
+<a href="#card-912897" class="timeline-item"><div class="time">02:25 PM</div><div>166 Campbell Dr</div></a>
+<a href="#card-1316344" class="timeline-item"><div class="time">02:50 PM</div><div>175 Sherland Ave</div></a>
+<a href="#card-167201210" class="timeline-item"><div class="time">03:10 PM</div><div>147 Orbit Way</div></a>
+<div style="font-size: 0.8rem; color: var(--accent-secondary); margin-top: 15px; margin-bottom: 10px;">CLUSTER 3: SUNNYVALE</div>
+<a href="#card-658385" class="timeline-item"><div class="time">03:35 PM</div><div>379 Dunsmuir Ter #3</div></a>
+<a href="#card-95957157" class="timeline-item"><div class="time">03:55 PM</div><div>306 Santa Diana Ter</div></a>
+<a href="#card-41396177" class="timeline-item"><div class="time">04:15 PM</div><div>933 Highland Ter</div></a>
+
+        </div>
+
+        <div class="section-title">📍 The Route</div>
+        <div class="property-grid">
+
+            <!-- Card 2123005 -->
+            <div class="property-card" id="card-2123005">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">1913 Vida Ct, Mountain View, CA 94043</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,500,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">3 Bed • 2.5 Bath • 1,475 SqFt</div>
+                <div class="property-subspecs">Unknown Lot Size</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Mountain View</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 94043. Schools: Theuerkauf Elementary School (5/10), Crittenden Middle School (9/10), Los Altos High School (10/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,500,000. $436/mo HOA. Estimated Prop 13 property tax: ~$18,000/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 2005. Equipped with Central AC. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 2.5 ba with 1,475 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">❌ Non-SFH<br>⚠️ Mixed Schools<br>✅ 2+ Baths<br>❌ Small Yard<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Mountain-View/1913-Vida-Ct-94043/home/2123005" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=1913+Vida+Ct,+Mountain+View,+CA+94043" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 23047434 -->
+            <div class="property-card" id="card-23047434">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">1903 Cambridge Dr, Mountain View, CA 94043</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,449,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">3 Bed • 3.5 Bath • 1,644 SqFt</div>
+                <div class="property-subspecs">Unknown Lot Size</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Mountain View</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 94043. Schools: Monta Loma Elementary School (6/10), Crittenden Middle School (9/10), Los Altos High School (10/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,449,000. $365/mo HOA. Estimated Prop 13 property tax: ~$17,388/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 2008. Equipped with Central AC.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 3.5 ba with 1,644 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">❌ Non-SFH<br>⚠️ Mixed Schools<br>✅ 2+ Baths<br>❌ Small Yard<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Mountain-View/1903-Cambridge-Dr-94043/home/23047434" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=1903+Cambridge+Dr,+Mountain+View,+CA+94043" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 41395650 -->
+            <div class="property-card" id="card-41395650">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">3281 Berryessa St #3, Palo Alto, CA 94303</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,528,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">3 Bed • 2 Bath • 1,456 SqFt</div>
+                <div class="property-subspecs">Unknown Lot Size</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Palo Alto</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 94303. Schools: Palo Verde Elementary School (8/10), Jane Lathrop Stanford Middle School (10/10), Palo Alto High School (10/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,528,000. $564/mo HOA. Estimated Prop 13 property tax: ~$18,336/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 2011. Equipped with Central AC. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 2 ba with 1,456 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">❌ Non-SFH<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>❌ Small Yard<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Palo-Alto/3281-Berryessa-St-94303/unit-3/home/41395650" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=3281+Berryessa+St+#3,+Palo+Alto,+CA+94303" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 912897 -->
+            <div class="property-card" id="card-912897">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">166 Campbell Dr, Mountain View, CA 94043</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,248,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">3 Bed • 2.5 Bath • 1,288 SqFt</div>
+                <div class="property-subspecs">435 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Mountain View</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 94043. Schools: Jose Antonio Vargas Elementary (8/10), Crittenden Middle School (9/10), Mountain View High School (10/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,248,000. $378/mo HOA. Estimated Prop 13 property tax: ~$14,976/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 2000. Equipped with Central AC. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 2.5 ba with 1,288 sq ft. Lot size is 435 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">❌ Non-SFH<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>❌ Small Yard<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Mountain-View/166-Campbell-Dr-94043/home/912897" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=166+Campbell+Dr,+Mountain+View,+CA+94043" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 1316344 -->
+            <div class="property-card" id="card-1316344">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">175 Sherland Ave, Mountain View, CA 94043</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,590,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">3 Bed • 3 Bath • 1,694 SqFt</div>
+                <div class="property-subspecs">4,060 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Mountain View</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 94043. Schools: Jose Antonio Vargas Elementary (8/10), Crittenden Middle School (9/10), Mountain View High School (10/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,590,000. $575/mo HOA. Estimated Prop 13 property tax: ~$19,080/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1979. Equipped with Central AC. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 3 ba with 1,694 sq ft. Lot size is 4,060 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">❌ Non-SFH<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>❌ Small Yard<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Mountain-View/175-Sherland-Ave-94043/home/1316344" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=175+Sherland+Ave,+Mountain+View,+CA+94043" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 167201210 -->
+            <div class="property-card" id="card-167201210">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">147 Orbit Way, Mountain View, CA 94043</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,478,800</div>
+                    </div>
+                </div>
+                <div class="property-specs">3 Bed • 3.5 Bath • 1,552 SqFt</div>
+                <div class="property-subspecs">Unknown Lot Size</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Mountain View</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 94043. Schools: Jose Antonio Vargas Elementary (8/10), Crittenden Middle School (9/10), Mountain View High School (10/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,478,800. $354/mo HOA. Estimated Prop 13 property tax: ~$17,746/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 2018. Equipped with Central AC.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 3.5 ba with 1,552 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">❌ Non-SFH<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>❌ Small Yard<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Mountain-View/147-Orbit-Way-94043/home/167201210" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=147+Orbit+Way,+Mountain+View,+CA+94043" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 658385 -->
+            <div class="property-card" id="card-658385">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">379 Dunsmuir Ter #3, Sunnyvale, CA 94085</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,138,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">3 Bed • 3 Bath • 1,150 SqFt</div>
+                <div class="property-subspecs">557 SqFt Lot</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Sunnyvale</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 94085. Schools: Bishop Elementary School (7/10), Columbia Middle School (6/10), Fremont High School (9/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,138,000. $453/mo HOA. Estimated Prop 13 property tax: ~$13,656/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1996. Equipped with Central AC. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 3 ba with 1,150 sq ft. Lot size is 557 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">❌ Non-SFH<br>⚠️ Mixed Schools<br>✅ 2+ Baths<br>⚠️ Small Yard (Sunnyvale Exception)<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Sunnyvale/379-Dunsmuir-Ter-94085/unit-3/home/658385" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=379+Dunsmuir+Ter+#3,+Sunnyvale,+CA+94085" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 95957157 -->
+            <div class="property-card" id="card-95957157">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">306 Santa Diana Ter, Sunnyvale, CA 94085</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,280,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">3 Bed • 2.5 Bath • 1,554 SqFt</div>
+                <div class="property-subspecs">Unknown Lot Size</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Sunnyvale</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 94085. Schools: San Miguel Elementary School (5/10), Columbia Middle School (6/10), Fremont High School (9/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,280,000. $423/mo HOA. Estimated Prop 13 property tax: ~$15,360/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 2014. Equipped with Central AC.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 2.5 ba with 1,554 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">❌ Non-SFH<br>⚠️ Mixed Schools<br>✅ 2+ Baths<br>⚠️ Small Yard (Sunnyvale Exception)<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Sunnyvale/306-Santa-Diana-Ter-94085/home/95957157" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=306+Santa+Diana+Ter,+Sunnyvale,+CA+94085" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+            <!-- Card 41396177 -->
+            <div class="property-card" id="card-41396177">
+                <div class="property-header">
+                    <div>
+                        <div class="property-address">933 Highland Ter, Sunnyvale, CA 94085</div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="color:var(--success); font-weight:700">$1,239,000</div>
+                    </div>
+                </div>
+                <div class="property-specs">3 Bed • 3 Bath • 1,482 SqFt</div>
+                <div class="property-subspecs">Unknown Lot Size</div>
+                <div class="badges">
+                    <div class="badge badge-yellow">Worth Touring</div> <div class="badge badge-blue">Sunnyvale</div>
+                </div>
+                <div class="quick-visual">🎯 <b>Recommendation:</b> Passes core deal-breakers but requires minor compromises.</div>
+                <details>
+                    <summary>View Home Report</summary>
+                    <div class="analysis-point">
+                        <div class="analysis-label">5 Core Dimensions</div>
+                        <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 94085. Schools: San Miguel Elementary School (5/10), Columbia Middle School (6/10), Fremont High School (9/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,239,000. $501/mo HOA. Estimated Prop 13 property tax: ~$14,868/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 2011. Equipped with Central AC. Description highlights recent remodeling/updates.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 3 ba with 1,482 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity.</div>
+                    </div>
+                    <div class="analysis-point">
+                        <div class="analysis-label">3-2-1 Framework</div>
+                        <div class="analysis-content">❌ Non-SFH<br>⚠️ Mixed Schools<br>✅ 2+ Baths<br>⚠️ Small Yard (Sunnyvale Exception)<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                    </div>
+                    
+                </details>
+                <div class="card-actions">
+                    <a href="https://www.redfin.com/CA/Sunnyvale/933-Highland-Ter-94085/home/41396177" target="_blank" class="btn btn-primary">Redfin</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=933+Highland+Ter,+Sunnyvale,+CA+94085" target="_blank" class="btn btn-secondary">Navigate</a>
+                </div>
+            </div>
+
+        <div class="section-title" style="margin-top: 40px; color: var(--danger);">🔴 Excluded Properties (Skips)</div>
+        <p style="color: var(--text-dim); margin-bottom: 20px; font-size: 0.9rem;">The following homes from the queue failed critical criteria and are excluded from the tour route.</p>
+        <div class="property-grid">
+
+                <!-- Card 1512285 -->
+                <div class="property-card" id="card-1512285" style="opacity: 0.75; border: 1px solid rgba(239, 68, 68, 0.15);">
+                    <div class="property-header">
+                        <div>
+                            <div class="property-address" style="color: var(--text-dim);">670 San Antonio Rd #28, Palo Alto, CA 94306</div>
+                        </div>
+                        <div style="text-align: right">
+                            <div style="color:var(--text-dim); font-weight:700">$1,598,000</div>
+                        </div>
+                    </div>
+                    <div class="property-specs">3 Bed • 2.5 Bath • 1,382 SqFt</div>
+                    <div class="property-subspecs">Unknown Lot Size</div>
+                    <div class="badges">
+                        <div class="badge badge-red">Skip</div> <div class="badge badge-blue">Palo Alto</div>
+                    </div>
+                    <div class="quick-visual" style="border-left-color: var(--danger);">❌ <b>Skip Reason:</b> No scheduled open house.</div>
+                    <details>
+                        <summary style="color: var(--text-dim);">View Home Details</summary>
+                        <div class="analysis-point">
+                            <div class="analysis-label">5 Core Dimensions</div>
+                            <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 94306. Schools: Monta Loma Elementary School (6/10), Crittenden Middle School (9/10), Los Altos High School (10/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,598,000. $585/mo HOA. Estimated Prop 13 property tax: ~$19,176/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1979. Cooling system: Wall/None.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 2.5 ba with 1,382 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity.</div>
+                        </div>
+                        <div class="analysis-point">
+                            <div class="analysis-label">3-2-1 Framework Check</div>
+                            <div class="analysis-content">❌ Non-SFH<br>⚠️ Mixed Schools<br>✅ 2+ Baths<br>❌ Small Yard<br>❌ No Central AC<br>✅ Under $2.2M Budget</div>
+                        </div>
+                        
+                        <div class="analysis-point" style="border-color: rgba(239, 68, 68, 0.3);">
+                            <div class="analysis-label" style="color: var(--danger)">Red Flags / Reason for Skip</div>
+                            <div class="analysis-content">🚩 <strong>Open House:</strong> No Saturday open house scheduled.<br></div>
+                        </div>
+                    </details>
+                    <div class="card-actions">
+                        <a href="https://www.redfin.com/CA/Palo-Alto/670-San-Antonio-Rd-94306/unit-28/home/1512285" target="_blank" class="btn btn-secondary">Redfin</a>
+                    </div>
+                </div>
+    
+                <!-- Card 1326303 -->
+                <div class="property-card" id="card-1326303" style="opacity: 0.75; border: 1px solid rgba(239, 68, 68, 0.15);">
+                    <div class="property-header">
+                        <div>
+                            <div class="property-address" style="color: var(--text-dim);">114 Granada Dr, Mountain View, CA 94043</div>
+                        </div>
+                        <div style="text-align: right">
+                            <div style="color:var(--text-dim); font-weight:700">$1,450,000</div>
+                        </div>
+                    </div>
+                    <div class="property-specs">3 Bed • 2.5 Bath • 1,422 SqFt</div>
+                    <div class="property-subspecs">637 SqFt Lot</div>
+                    <div class="badges">
+                        <div class="badge badge-red">Skip</div> <div class="badge badge-blue">Mountain View</div>
+                    </div>
+                    <div class="quick-visual" style="border-left-color: var(--danger);">❌ <b>Skip Reason:</b> No scheduled open house.</div>
+                    <details>
+                        <summary style="color: var(--text-dim);">View Home Details</summary>
+                        <div class="analysis-point">
+                            <div class="analysis-label">5 Core Dimensions</div>
+                            <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 94043. Schools: Theuerkauf Elementary School (5/10), Crittenden Middle School (9/10), Los Altos High School (10/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,450,000. $586/mo HOA. Estimated Prop 13 property tax: ~$17,400/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 1978. Equipped with Central AC.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 2.5 ba with 1,422 sq ft. Lot size is 637 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity.</div>
+                        </div>
+                        <div class="analysis-point">
+                            <div class="analysis-label">3-2-1 Framework Check</div>
+                            <div class="analysis-content">❌ Non-SFH<br>⚠️ Mixed Schools<br>✅ 2+ Baths<br>❌ Small Yard<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                        </div>
+                        
+                        <div class="analysis-point" style="border-color: rgba(239, 68, 68, 0.3);">
+                            <div class="analysis-label" style="color: var(--danger)">Red Flags / Reason for Skip</div>
+                            <div class="analysis-content">🚩 <strong>Open House:</strong> No Saturday open house scheduled.<br></div>
+                        </div>
+                    </details>
+                    <div class="card-actions">
+                        <a href="https://www.redfin.com/CA/Mountain-View/114-Granada-Dr-94043/home/1326303" target="_blank" class="btn btn-secondary">Redfin</a>
+                    </div>
+                </div>
+    
+                <!-- Card 197859298 -->
+                <div class="property-card" id="card-197859298" style="opacity: 0.75; border: 1px solid rgba(239, 68, 68, 0.15);">
+                    <div class="property-header">
+                        <div>
+                            <div class="property-address" style="color: var(--text-dim);">1301 Barbet Cir #2, Sunnyvale, CA 94087</div>
+                        </div>
+                        <div style="text-align: right">
+                            <div style="color:var(--text-dim); font-weight:700">$1,399,000</div>
+                        </div>
+                    </div>
+                    <div class="property-specs">3 Bed • 2 Bath • 1,501 SqFt</div>
+                    <div class="property-subspecs">Unknown Lot Size</div>
+                    <div class="badges">
+                        <div class="badge badge-red">Skip</div> <div class="badge badge-blue">Sunnyvale</div>
+                    </div>
+                    <div class="quick-visual" style="border-left-color: var(--danger);">❌ <b>Skip Reason:</b> No scheduled open house.</div>
+                    <details>
+                        <summary style="color: var(--text-dim);">View Home Details</summary>
+                        <div class="analysis-point">
+                            <div class="analysis-label">5 Core Dimensions</div>
+                            <div class="analysis-content"><strong>Location:</strong> Convenient location in zip code 94087. Schools: Louis E. Stocklmeir Elementary School (10/10), Cupertino Middle School (9/10), Fremont High School (9/10).</div><div class="analysis-content"><strong>Financials:</strong> Asking $1,399,000. $314/mo HOA. Estimated Prop 13 property tax: ~$16,788/year.</div><div class="analysis-content"><strong>Condition:</strong> Built in 2024. Equipped with Central AC.</div><div class="analysis-content"><strong>Space:</strong> 3 bd / 2 ba with 1,501 sq ft.</div><div class="analysis-content"><strong>Resale:</strong> Appreciation potential is strong due to SFH status and neighborhood liquidity. Elite school district ensures high resale demand.</div>
+                        </div>
+                        <div class="analysis-point">
+                            <div class="analysis-label">3-2-1 Framework Check</div>
+                            <div class="analysis-content">❌ Non-SFH<br>✅ Good Schools (7+)<br>✅ 2+ Baths<br>⚠️ Small Yard (Sunnyvale Exception)<br>✅ Central AC<br>✅ Under $2.2M Budget</div>
+                        </div>
+                        
+                        <div class="analysis-point" style="border-color: rgba(239, 68, 68, 0.3);">
+                            <div class="analysis-label" style="color: var(--danger)">Red Flags / Reason for Skip</div>
+                            <div class="analysis-content">🚩 <strong>Open House:</strong> No Saturday open house scheduled.<br></div>
+                        </div>
+                    </details>
+                    <div class="card-actions">
+                        <a href="https://www.redfin.com/CA/Sunnyvale/1301-Barbet-Cir-94087/unit-2/home/197859298" target="_blank" class="btn btn-secondary">Redfin</a>
+                    </div>
+                </div>
+    
+            </div>
+
+    </div>
+</body>
+</html>
